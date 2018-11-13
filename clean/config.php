@@ -4,14 +4,12 @@
 	
 	Stores configuration data for our application
 */
+ob_start();//prevents header errors
 
-//echo basename($_SERVER['PHP_SELF']);
+define('DEBUG',TRUE); #we want to see all errors
 
+include 'credentials.php';//database credentials
 define('THIS_PAGE',basename($_SERVER['PHP_SELF']));
-
-//echo 'the constant is storing: ' . THIS_PAGE;
-
-//die;
 
 /*
  Below is an array of images to be used on contact.php in the function named 
@@ -49,6 +47,12 @@ switch(THIS_PAGE){
         $pageHeader = 'Put PageID here';
         $subHeader = 'Put more info about page here';
 	break;
+        
+    case 'db-test.php':
+		$title =  'A database test page';
+        $pageHeader = 'Database Test Page';
+        $subHeader = 'Check this page to see if your db credentails are correct.';
+	break;    
         
     case 'daily.php':
 		$title =  'My Daily page';
@@ -125,6 +129,21 @@ function rotate ($arr)
 		return $arr;
 	}
 }#end rotate
+
+
+function myerror($myFile, $myLine, $errorMsg)
+{
+    if(defined('DEBUG') && DEBUG)
+    {
+       echo "Error in file: <b>" . $myFile . "</b> on line: <b>" . $myLine . "</b><br />";
+       echo "Error Message: <b>" . $errorMsg . "</b><br />";
+       die();
+    }else{
+		echo "I'm sorry, we have encountered an error.  Would you like to buy some socks?";
+		die();
+    }
+}
+
 
 
 
